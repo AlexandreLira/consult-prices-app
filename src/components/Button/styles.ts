@@ -4,7 +4,6 @@ import { RFValue } from 'react-native-responsive-fontsize';
 
 export const Container = styled.TouchableOpacity`
     width: 100%;
-    height: ${RFValue(66)}px;
 
     align-items: center;
     flex-direction: row;
@@ -24,7 +23,7 @@ export const IconContainer = styled.View`
 `;
 
 export const Icon = styled(Ionicons)`
-    font-size: ${RFValue(32)}px;
+    font-size: ${RFValue(24)}px;
     color: ${({theme}) => theme.colors.shape};
 
 `;
@@ -32,7 +31,7 @@ export const Icon = styled(Ionicons)`
 export const Text = styled.Text`
     flex: 1;
 
-    font-size: ${RFValue(16)}px;
+    font-size: ${RFValue(14)}px;
     font-family: ${({theme}) => theme.fonts.regular};
     color: ${({theme}) => theme.colors.shape};
 

@@ -1,26 +1,24 @@
-import React from "react";
+import { useRoute } from '@react-navigation/native';
+import React from 'react';
 
-import { Button } from "../../components/Button";
 import { Header } from "../../components/Header";
-import { ProductCard } from "../../components/ProductCard";
-
-import { products } from "../../utils/dumbData";
+import { ProductCard } from '../../components/ProductCard';
 
 import {
     Container,
-    Footer,
-    Gradient,
     ProductList,
     ProductListFooter,
     SeparatorProduct
 } from "./styles";
 
-
-export function Home({navigation}: any) {
+export function SearchResult(){
+    const { params } = useRoute()
+    
+    const products = [params.products]
 
     return (
         <Container>
-            <Header title="Minhas pesquisas" />
+            <Header title="Resultado" back/>
             <ProductList
                 data={products}
                 keyExtractor={product => product.product_id}
@@ -34,16 +32,6 @@ export function Home({navigation}: any) {
                 ItemSeparatorComponent={() => <SeparatorProduct />}
                 ListFooterComponent={<ProductListFooter />}
             />
-
-
-            <Footer>
-                <Button
-                    title="Pesquisar produto"
-                    onPress={() => navigation.navigate('Scanner')}
-                />
-               
-            </Footer>
-            <Gradient />
         </Container>
     )
 }

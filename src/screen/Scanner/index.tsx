@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Dimensions } from "react-native";
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { RFPercentage } from "react-native-responsive-fontsize";
+import { useNavigation } from "@react-navigation/native";
 
 import { Header } from "../../components/Header";
 import { BarCodeMask } from "../../components/BarCodeMask";
@@ -14,16 +15,20 @@ import {
     ScanAnimation,
     Text
 } from "./styles";
+import { products } from "../../utils/dumbData";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 export function Scanner() {
     const [scanned, setScanned] = useState(false);
+    const navigation = useNavigation()
 
+    
     const handleBarCodeScanned = ({ type, data }: any) => {
         setScanned(true);
-        alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-        setScanned(false);
+        
+        navigation.navigate('SearchResult', {products: products[0]})
+        // setScanned(false);
     };
 
 

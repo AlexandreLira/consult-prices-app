@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Text } from 'react-native';
 import { StyleSheet, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { ThemeProvider } from 'styled-components';
@@ -10,11 +11,14 @@ import {
   Poppins_700Bold,
 } from '@expo-google-fonts/poppins';
 
-import { Home } from './src/screen/Home';
+import { Routes } from './src/routes';
 
 import theme from './src/global/styles/theme';
+import { BarCodeScanner } from 'expo-barcode-scanner';
+
 
 export default function App() {
+  const [hasPermission, setHasPermission] = useState(null);
 
   const [fontsLoaded] = useFonts({
     Poppins_400Regular,
@@ -23,10 +27,17 @@ export default function App() {
   });
 
   useEffect(() => {
+
     async function prepare() {
       await SplashScreen.preventAutoHideAsync();
     }
 
+    async function getBarCodeScannerPermissions() {
+      const { status } = await BarCodeScanner.requestPermissionsAsync();
+      setHasPermission(status === 'granted');
+    };
+
+    getBarCodeScannerPermissions();
     prepare()
   }, [])
 
@@ -36,14 +47,23 @@ export default function App() {
     }
   }, [fontsLoaded])
 
-  if(!fontsLoaded) {
+  if (!fontsLoaded) {
     return null;
+  }
+
+
+  if (hasPermission === null) {
+    return <Text>Requesting for camera permission</Text>;
+  }
+
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
   }
 
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
       <ThemeProvider theme={theme}>
-        <Home />
+        <Routes />
         <StatusBar style="light" />
       </ThemeProvider>
     </View>

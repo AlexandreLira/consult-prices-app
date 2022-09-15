@@ -1,13 +1,21 @@
 import React from "react";
-import { View } from "react-native";
+
 import { Button } from "../../components/Button";
 import { Header } from "../../components/Header";
 import { ProductCard } from "../../components/ProductCard";
+
 import { products } from "../../utils/dumbData";
-import { Container, Footer, ProductList, ProductListFooter, SeparatorProduct } from "./styles";
 
-export function Home() {
+import {
+    Container,
+    Footer,
+    ProductList,
+    ProductListFooter,
+    SeparatorProduct
+} from "./styles";
 
+
+export function Home({navigation}: any) {
 
     return (
         <Container>
@@ -23,11 +31,14 @@ export function Home() {
                     />
                 )}
                 ItemSeparatorComponent={() => <SeparatorProduct />}
-                ListFooterComponent={<ProductListFooter/>}
+                ListFooterComponent={<ProductListFooter />}
             />
 
             <Footer>
-                <Button title="Pesquisar produto" />
+                <Button
+                    title="Pesquisar produto"
+                    onPress={() => navigation.navigate('Scanner')}
+                />
 
             </Footer>
         </Container>

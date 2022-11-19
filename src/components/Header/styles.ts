@@ -3,17 +3,17 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { Feather } from '@expo/vector-icons'
 export const Container = styled.View`
     width: 100%;
-    height: ${RFValue(113)}px;
+    height: ${RFValue(90)}px;
     justify-content: flex-end;
     align-items: center;
-    background-color: ${({theme}) => theme.colors.primary};
+    background-color: ${({theme}) => theme.colors.shape};
 `;
 
 export const Title = styled.Text`
     margin-bottom: 18px;
     font-size: ${RFValue(18)}px;
     font-family: ${({theme}) => theme.fonts.medium};
-    color: ${({theme}) => theme.colors.shape};
+    color: ${({theme}) => theme.colors.title};
 `;
 
 export const BackButton = styled.TouchableOpacity`
@@ -29,5 +29,5 @@ export const Icon = styled(Feather)`
     margin-bottom:  ${RFValue(20)}px;
     font-size: ${RFValue(24)}px;
 
-    color: ${({theme}) => theme.colors.shape};
+    color: ${({theme}) => theme.colors.title};
 `;

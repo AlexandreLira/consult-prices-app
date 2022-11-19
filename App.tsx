@@ -64,7 +64,7 @@ export default function App() {
     <View style={styles.container} onLayout={onLayoutRootView}>
       <ThemeProvider theme={theme}>
         <Routes />
-        <StatusBar style="light" />
+        <StatusBar style="dark" />
       </ThemeProvider>
     </View>
   );

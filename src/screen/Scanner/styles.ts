@@ -75,8 +75,8 @@ export const SwitchOptionContent = styled.View`
 export const SwithBackground = styled.TouchableOpacity`
     background-color: ${({theme}) => theme.colors.shape};
     width: 80%;
-    height: 40px;
-    border-radius: 20px;
+    height: 50px;
+    border-radius: 25px;
     margin-top: 15px;
     flex-direction: row;
 `;

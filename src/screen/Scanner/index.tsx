@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import { Header } from "../../components/Header";
 import { BarCodeMask } from "../../components/BarCodeMask";
+import { SearchByName } from "../../components/SearchByName";
 
 import {
     Card,
@@ -52,48 +53,59 @@ export function Scanner() {
     return (
         <Container>
             <Header title="Pesquisar produto" back />
-            <Content>
-                <CardContainer>
-                    <Card>
-                        <Text>Escaneie o código de barras do produto</Text>
-                    </Card>
-                </CardContainer>
-                <BarCodeMask />
+            {optionToSearch  === 'byBarcode' ? (
+                <Content>
+                    <CardContainer>
+                        <Card>
+                            <Text>Escaneie o código de barras do produto</Text>
+                        </Card>
+                    </CardContainer>
+                    <BarCodeMask />
 
-                <ScanAnimation
-                    animation={makeSlideOutTranslation(
-                        "translateY",
-                        RFPercentage(10)
-                    )}
-                />
+                    <ScanAnimation
+                        animation={makeSlideOutTranslation(
+                            "translateY",
+                            RFPercentage(10)
+                        )}
+                    />
 
-                <BarCodeScanner
-                    onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-                    style={{ flex: 1 }}
-                />
+                    <BarCodeScanner
+                        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+                        style={{ flex: 1 }}
+                    />
 
-                <SwitchOptionContent>
-                    <Text>Pesquisar produto por:</Text>
-                    <SwithBackground onPress={() => setOptionToSearch(state => state === 'byName' ? 'byBarcode' : 'byName')}>
-                        <SwithOption disabled={Boolean(optionToSearch !== 'byBarcode')}>
-                            <Text
-                                color={optionToSearch === 'byBarcode' ?
-                                    theme.colors.shape :
-                                    theme.colors.title
-                                }
-                            >Código de barras</Text>
-                        </SwithOption>
-                        <SwithOption disabled={Boolean(optionToSearch !== 'byName')}>
-                            <Text
-                                color={optionToSearch === 'byName' ?
-                                    theme.colors.shape :
-                                    theme.colors.title
-                                }>Nome</Text>
-                        </SwithOption>
-                    </SwithBackground>
-                </SwitchOptionContent>
 
-            </Content>
+                </Content>
+            ) : (
+                <SearchByName />
+
+            )}
+
+            <SwitchOptionContent>
+                <Text
+                    color={optionToSearch === 'byBarcode' ?
+                        theme.colors.shape :
+                        theme.colors.title
+                    }>Pesquisar produto por:</Text>
+                <SwithBackground onPress={() => setOptionToSearch(state => state === 'byName' ? 'byBarcode' : 'byName')}>
+                    <SwithOption disabled={Boolean(optionToSearch !== 'byBarcode')}>
+                        <Text
+                            color={optionToSearch === 'byBarcode' ?
+                                theme.colors.shape :
+                                theme.colors.title
+                            }
+                        >Código de barras</Text>
+                    </SwithOption>
+                    <SwithOption disabled={Boolean(optionToSearch !== 'byName')}>
+                        <Text
+                            color={optionToSearch === 'byName' ?
+                                theme.colors.shape :
+                                theme.colors.title
+                            }>Nome</Text>
+                    </SwithOption>
+                </SwithBackground>
+            </SwitchOptionContent>
+
         </Container>
     )
 }

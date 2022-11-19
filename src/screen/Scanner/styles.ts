@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import { RFValue, RFPercentage } from 'react-native-responsive-fontsize';
 import * as Animatable from "react-native-animatable";
-
+import {Platform} from 'react-native'
 export const Container = styled.View`
     flex: 1;
     background-color: black;
@@ -15,9 +15,8 @@ export const Content = styled.View`
 export const CardContainer = styled.View`
     z-index: 999;
     width: 100%;
-
     position: absolute;
-    top: ${RFPercentage(30)}px;
+    top: ${Platform.OS === 'android' ? RFPercentage(30) : RFPercentage(22)}px;
 
     justify-content: center;
     align-items: center;
@@ -66,7 +65,7 @@ export const ScanAnimation = styled(Animatable.View).attrs({
 export const SwitchOptionContent = styled.View`
     width: 100%;
     position: absolute;
-    bottom: ${RFPercentage(15)}px;
+    bottom: ${RFPercentage(10)}px;
     z-index: 999;
     align-items: center;
 `;

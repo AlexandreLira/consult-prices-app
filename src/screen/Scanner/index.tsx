@@ -26,7 +26,7 @@ export function Scanner() {
     
     const handleBarCodeScanned = ({ type, data }: any) => {
         setScanned(true);
-        
+        // @ts-ignore
         navigation.navigate('SearchResult', {products: products[0]})
         // setScanned(false);
     };

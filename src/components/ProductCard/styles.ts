@@ -3,7 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Image } from 'react-native';
 
-export const Container = styled.View`
+export const Container = styled.TouchableOpacity`
     width: 100%;
 
     flex-direction: row;

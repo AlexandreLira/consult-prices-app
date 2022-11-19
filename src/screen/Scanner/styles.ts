@@ -17,7 +17,7 @@ export const CardContainer = styled.View`
     width: 100%;
 
     position: absolute;
-    top: ${RFPercentage(62)}px;
+    top: ${RFPercentage(30)}px;
 
     justify-content: center;
     align-items: center;
@@ -34,8 +34,12 @@ export const Card = styled.View`
     background-color: rgba(0,0,0,0.5);
 `;
 
-export const Text = styled.Text`
-    color: rgba(255,255,255,0.8);
+interface TextProps {
+    color: string;
+}
+
+export const Text = styled.Text<TextProps>`
+    color: ${({theme, color}) => color ? color : theme.colors.shape};
     text-align: center;
     font-family: ${({theme}) => theme.fonts.regular};
     font-size: ${RFValue(12)}px;
@@ -58,4 +62,35 @@ export const ScanAnimation = styled(Animatable.View).attrs({
     z-index: 99;
     
 `;
+
+export const SwitchOptionContent = styled.View`
+    width: 100%;
+    position: absolute;
+    bottom: ${RFPercentage(15)}px;
+    z-index: 999;
+    align-items: center;
+`;
+
+
+export const SwithBackground = styled.TouchableOpacity`
+    background-color: ${({theme}) => theme.colors.shape};
+    width: 80%;
+    height: 40px;
+    border-radius: 20px;
+    margin-top: 15px;
+    flex-direction: row;
+`;
+
+interface SwithOptionsProps {
+    disabled: boolean;
+}
+
+export const SwithOption = styled.View<SwithOptionsProps>`
+    background-color: ${({theme, disabled}) => disabled ? 'transparent' : theme.colors.primary};
+    height: 100%;
+    width: 50%;
+    border-radius: 100px;
+    justify-content: center;
+    align-items: center
+`
 

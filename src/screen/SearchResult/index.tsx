@@ -14,7 +14,7 @@ import {
 export function SearchResult(){
     const { params } = useRoute()
     
-    const products = [params.products]
+    const products = params.products
 
     return (
         <Container>

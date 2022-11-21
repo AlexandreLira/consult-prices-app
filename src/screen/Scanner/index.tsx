@@ -1,12 +1,9 @@
-import React, { useState } from "react";
-import { Dimensions, Switch } from "react-native";
+import React from "react";
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { RFPercentage } from "react-native-responsive-fontsize";
-import { useNavigation } from "@react-navigation/native";
 
 import { Header } from "../../components/Header";
 import { BarCodeMask } from "../../components/BarCodeMask";
-import { SearchByName } from "../../components/SearchByName";
 
 import {
     Card,
@@ -17,91 +14,97 @@ import {
     SwitchOptionContent,
     SwithBackground,
     SwithOption,
-    Text
-} from "./styles";
-import { products } from "../../utils/dumbData";
-import { useTheme } from "styled-components";
+    Text,
 
-const SCREEN_WIDTH = Dimensions.get("window").width;
+    SearchByNameContent,
+    Title,
+    SearchBarContent,
+    Icon,
+    SearchBarInput
+} from "./styles";
+
+import { useScannerViewModel } from "./view.model";
+import { ActivityIndicator } from "react-native";
+
 
 export function Scanner() {
-    const [scanned, setScanned] = useState(false);
-    const [optionToSearch, setOptionToSearch] = useState<'byName' | 'byBarcode'>('byBarcode');
-    const navigation = useNavigation()
-    const theme = useTheme()
 
-    const handleBarCodeScanned = ({ type, data }: any) => {
-        setScanned(true);
-        // @ts-ignore
-        navigation.navigate('SearchResult', { products: products[0] })
-        // setScanned(false);
-    };
+    const {
+        onSearchByName,
+        onChangeSearchType,
+        makeSlideOutTranslation,
+        handleBarCodeScanned,
+        colors,
+        optionToSearch,
+        scanned,
+        isSearchLoading,
+        onChangeText,
 
+        isOnBarcodeSearch,
+    } = useScannerViewModel()
 
-
-    function makeSlideOutTranslation(translationType: string, fromValue: number) {
-        return {
-            from: {
-                [translationType]: SCREEN_WIDTH * -0.18
-            },
-            to: {
-                [translationType]: fromValue
-            }
-        };
-    }
 
     return (
         <Container>
             <Header title="Pesquisar produto" back />
-            {optionToSearch  === 'byBarcode' ? (
+            {optionToSearch === 'byBarcode' ? (
                 <Content>
-                    <CardContainer>
-                        <Card>
-                            <Text>Escaneie o código de barras do produto</Text>
-                        </Card>
-                    </CardContainer>
-                    <BarCodeMask />
+                    {!isSearchLoading ? (
+                        <>
+                            <CardContainer>
+                                <Card>
+                                    <Text>Escaneie o código de barras do produto</Text>
+                                </Card>
+                            </CardContainer>
+                            <BarCodeMask />
 
-                    <ScanAnimation
-                        animation={makeSlideOutTranslation(
-                            "translateY",
-                            RFPercentage(10)
-                        )}
-                    />
+                            <ScanAnimation
+                                animation={makeSlideOutTranslation(
+                                    "translateY",
+                                    RFPercentage(10)
+                                )}
+                            />
 
-                    <BarCodeScanner
-                        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-                        style={{ flex: 1 }}
-                    />
+                            <BarCodeScanner
+                                onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+                                style={{ flex: 1 }}
+                            />
+                        </>
+                    ) : <ActivityIndicator />}
+
 
 
                 </Content>
             ) : (
-                <SearchByName />
+                <SearchByNameContent>
+                    <Title>Pesquise pelo nome do produto</Title>
 
+                    <SearchBarContent>
+                        {isSearchLoading ? <ActivityIndicator /> : <Icon name="search" />}
+                        <SearchBarInput
+                            placeholder="Exemplo: Iphone 8 plus"
+                            onChangeText={onChangeText}
+                            onSubmitEditing={onSearchByName}
+                        />
+                    </SearchBarContent>
+
+                </SearchByNameContent>
             )}
 
             <SwitchOptionContent>
-                <Text
-                    color={optionToSearch === 'byBarcode' ?
-                        theme.colors.shape :
-                        theme.colors.title
-                    }>Pesquisar produto por:</Text>
-                <SwithBackground onPress={() => setOptionToSearch(state => state === 'byName' ? 'byBarcode' : 'byName')}>
-                    <SwithOption disabled={Boolean(optionToSearch !== 'byBarcode')}>
-                        <Text
-                            color={optionToSearch === 'byBarcode' ?
-                                theme.colors.shape :
-                                theme.colors.title
-                            }
-                        >Código de barras</Text>
+                <Text color={isOnBarcodeSearch ? colors.shape : colors.title}>
+                    Pesquisar produto por:
+                </Text>
+                <SwithBackground onPress={onChangeSearchType}>
+                    <SwithOption disabled={!isOnBarcodeSearch}>
+                        <Text color={isOnBarcodeSearch ? colors.shape : colors.title}>
+                            Código de barras
+                        </Text>
                     </SwithOption>
-                    <SwithOption disabled={Boolean(optionToSearch !== 'byName')}>
-                        <Text
-                            color={optionToSearch === 'byName' ?
-                                theme.colors.shape :
-                                theme.colors.title
-                            }>Nome</Text>
+                    <SwithOption disabled={isOnBarcodeSearch}>
+                        <Text color={!isOnBarcodeSearch ? colors.shape : colors.title}>
+                            Nome
+                        </Text>
                     </SwithOption>
                 </SwithBackground>
             </SwitchOptionContent>

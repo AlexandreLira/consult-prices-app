@@ -1,6 +1,5 @@
 const API_KEY = 'AIzaSyA3lgN1JFkx8WCxddXGQ-QBhr0aNX2lfeI'
 export async function googleSearchApi(name: string){
-    console.log('dahfkja')
     const searchOptions = {
         key: API_KEY,
         searchType: 'image',
@@ -19,6 +18,10 @@ export async function googleSearchApi(name: string){
 
     const response = await fetch(url)
     const data = await response.json()
+    if(data.searchInformation.totalResults === '0') {
+        throw new Error()
+    }
+
     if(data.error){
         throw new Error(data.error)
     }

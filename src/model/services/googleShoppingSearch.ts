@@ -34,6 +34,7 @@ export async function googleShoppingSearchByName(productName: string) {
         gl: "br",
         hl: "pt-br",
         tbm: "shop",
+        nfpr: "1",
     }
 
     const url = [
@@ -46,6 +47,7 @@ export async function googleShoppingSearchByName(productName: string) {
         `hl=${searchOptions.hl}&`,
         `tbm=${searchOptions.tbm}&`,
         `device=${searchOptions.device}&`,
+        `nfpr=${searchOptions.nfpr}&`,
         `api_key=${API_KEY}`].join('')
 
 

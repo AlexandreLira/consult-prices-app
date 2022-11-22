@@ -25,6 +25,7 @@ import {
 
 import { useScannerViewModel } from "./view.model";
 import { ActivityIndicator } from "react-native";
+import { NotFound } from "../../components/NotFound";
 
 
 export function Scanner() {
@@ -34,14 +35,22 @@ export function Scanner() {
         onChangeSearchType,
         makeSlideOutTranslation,
         handleBarCodeScanned,
+        onChangeText,
+        handleTryAgain,
         colors,
         optionToSearch,
         scanned,
         isSearchLoading,
-        onChangeText,
-
+        error,
         isOnBarcodeSearch,
     } = useScannerViewModel()
+
+
+    if(error){
+        return (
+            <NotFound onPress={handleTryAgain}/>
+        )
+    }
 
 
     return (

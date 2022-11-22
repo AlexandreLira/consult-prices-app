@@ -25,7 +25,7 @@ export function useScannerViewModel<FC>() {
             const products = await googleShoppingSearchByName(productName)
             // @ts-ignore
             navigation.navigate('SearchResult', { products })
-        } catch(error) {
+        } catch (error) {
             console.log(error)
             setError(true)
         } finally {
@@ -37,15 +37,29 @@ export function useScannerViewModel<FC>() {
     const handleBarCodeScanned = async ({ type, data }: any) => {
         setScanned(true);
         setIsSearchLoading(true)
-        // @ts-ignore
-        const productName = await googleSearchApi(data)
-        const products = await googleShoppingSearchByName(productName)
-        setIsSearchLoading(false)
-        setScanned(false);
+        try {
+            // @ts-ignore
+            const productName = await googleSearchApi(data)
+            const products = await googleShoppingSearchByName(productName)
+            // @ts-ignore
+            navigation.navigate('SearchResult', { products })
 
-         // @ts-ignore
-        navigation.navigate('SearchResult', { products })
+        } catch (error) {
+            console.log(error)
+            setError(true)
+        } finally {
+            setIsSearchLoading(false)
+            setScanned(false);
+
+        }
+
+
     };
+
+
+    function handleTryAgain(){
+        setError(false)
+    }
 
 
 
@@ -73,17 +87,19 @@ export function useScannerViewModel<FC>() {
         };
     }
 
-   
+
 
     return {
         onSearchByName,
         onChangeSearchType,
         makeSlideOutTranslation,
         handleBarCodeScanned,
+        handleTryAgain,
         scanned,
         colors,
         optionToSearch,
         isSearchLoading,
+        error,
 
         onChangeText,
 

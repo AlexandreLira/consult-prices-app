@@ -26,6 +26,7 @@ export async function googleSearchApi(name: string){
         throw new Error(data.error)
     }
     const title = formattedTitle(data.items[0].title, name)
+    console.log(title)
     return title
 }
 

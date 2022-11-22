@@ -57,7 +57,7 @@ export async function googleShoppingSearchByName(productName: string) {
         throw new Error(data.error)
     }
     
-    return data.shopping_results
+    return data.shopping_results.filter(item => !item.price.includes('mês'))
 
 
 

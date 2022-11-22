@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { Linking } from 'react-native';
 import { useRoute } from '@react-navigation/native';
+import { useSearch } from '../../viewModel/search';
 
 export function useSearchResult() {
 
@@ -8,6 +10,7 @@ export function useSearchResult() {
     const [min, setMin] = useState('R$0,00')
 
     const { params } = useRoute()
+    const { saveProductOnStorage } = useSearch()
 
     const products = params.products
 
@@ -32,13 +35,21 @@ export function useSearchResult() {
 
     }
 
+    function handleGoSite(link: string) {
+        Linking.openURL(link)
+    }
+
     useEffect(() => {
-        calculateThePrices(products)
+        (async () => {
+            calculateThePrices(products)
+            await saveProductOnStorage(products[0])
+        })()
     }, [])
 
 
     return {
         products,
+        handleGoSite,
         average,
         min,
         max

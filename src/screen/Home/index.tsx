@@ -1,10 +1,10 @@
+import { isLoading } from "expo-font";
 import React from "react";
 
 import { Button } from "../../components/Button";
 import { Header } from "../../components/Header";
+import { LoadingCard } from "../../components/LoadingCard";
 import { ProductCard } from "../../components/ProductCard";
-
-import { products } from "../../utils/dumbData";
 
 import {
     Container,
@@ -15,8 +15,15 @@ import {
     SeparatorProduct
 } from "./styles";
 
+import { useHomeController } from "./view.controller";
 
-export function Home({navigation}: any) {
+
+export function Home({ navigation }: any) {
+    const {
+        products,
+        handleSearch,
+        isLoading
+    } = useHomeController()
 
     return (
         <Container>
@@ -25,10 +32,12 @@ export function Home({navigation}: any) {
                 data={products}
                 keyExtractor={product => product.product_id}
                 renderItem={({ item }) => (
-                    <ProductCard data={{
-                        origin: item.source,
-                        ...item
-                    }}
+                    <ProductCard
+                        data={{
+                            origin: item.source,
+                            ...item
+                        }}
+                        onPress={() => handleSearch(item.title)}
                     />
                 )}
                 ItemSeparatorComponent={() => <SeparatorProduct />}
@@ -41,9 +50,11 @@ export function Home({navigation}: any) {
                     title="Pesquisar produto"
                     onPress={() => navigation.navigate('Scanner')}
                 />
-               
+
             </Footer>
             <Gradient />
+
+            {isLoading && <LoadingCard/>}
         </Container>
     )
 }

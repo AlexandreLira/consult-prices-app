@@ -19,7 +19,8 @@ export function SearchResult() {
         products,
         average,
         min,
-        max
+        max,
+        handleGoSite
     } = useSearchResult()
 
     return (
@@ -29,10 +30,13 @@ export function SearchResult() {
                 data={products}
                 keyExtractor={product => product.product_id}
                 renderItem={({ item }) => (
-                    <ProductCard data={{
-                        origin: item.source,
-                        ...item
-                    }}
+                    <ProductCard
+                        data={{
+                            origin: item.source,
+                            ...item
+                        }}
+
+                        onPress={() => handleGoSite(item.link)}
                     />
                 )}
                 ListHeaderComponent={

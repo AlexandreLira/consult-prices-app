@@ -20,7 +20,9 @@ import {
     Title,
     SearchBarContent,
     Icon,
-    SearchBarInput
+    SearchBarInput,
+    LoadingContent,
+    LoadingCard
 } from "./styles";
 
 import { useScannerViewModel } from "./view.model";
@@ -46,9 +48,9 @@ export function Scanner() {
     } = useScannerViewModel()
 
 
-    if(error){
+    if (error) {
         return (
-            <NotFound onPress={handleTryAgain}/>
+            <NotFound onPress={handleTryAgain} />
         )
     }
 
@@ -58,38 +60,31 @@ export function Scanner() {
             <Header title="Pesquisar produto" back />
             {optionToSearch === 'byBarcode' ? (
                 <Content>
-                    {!isSearchLoading ? (
-                        <>
-                            <CardContainer>
-                                <Card>
-                                    <Text>Escaneie o código de barras do produto</Text>
-                                </Card>
-                            </CardContainer>
-                            <BarCodeMask />
+                    <CardContainer>
+                        <Card>
+                            <Text>Escaneie o código de barras do produto</Text>
+                        </Card>
+                    </CardContainer>
+                    <BarCodeMask />
 
-                            <ScanAnimation
-                                animation={makeSlideOutTranslation(
-                                    "translateY",
-                                    RFPercentage(10)
-                                )}
-                            />
+                    <ScanAnimation
+                        animation={makeSlideOutTranslation(
+                            "translateY",
+                            RFPercentage(10)
+                        )}
+                    />
 
-                            <BarCodeScanner
-                                onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-                                style={{ flex: 1 }}
-                            />
-                        </>
-                    ) : <ActivityIndicator />}
-
-
-
+                    <BarCodeScanner
+                        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+                        style={{ flex: 1 }}
+                    />
                 </Content>
             ) : (
                 <SearchByNameContent>
                     <Title>Pesquise pelo nome do produto</Title>
 
                     <SearchBarContent>
-                        {isSearchLoading ? <ActivityIndicator /> : <Icon name="search" />}
+                        <Icon name="search" />
                         <SearchBarInput
                             placeholder="Exemplo: Iphone 8 plus"
                             onChangeText={onChangeText}
@@ -117,7 +112,18 @@ export function Scanner() {
                     </SwithOption>
                 </SwithBackground>
             </SwitchOptionContent>
+            
 
+            {isSearchLoading && (
+                <LoadingContent>
+                    <LoadingCard>
+                        <ActivityIndicator size="large" color={colors.primary}/>
+                        <Text color={colors.title}>
+                            Estou fazendo sua busca...
+                        </Text>
+                    </LoadingCard>
+                </LoadingContent>
+            )}
         </Container>
     )
 }

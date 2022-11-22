@@ -135,3 +135,29 @@ export const SearchBarInput = styled.TextInput.attrs(({theme}) => ({
     height: 50px
 `
 
+export const LoadingContent = styled.View`
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    background-color: rgba(0,0,0,.5);
+    justify-content: center;
+    align-items: center;
+`
+
+export const LoadingCard = styled.View`
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    z-index: 999;
+    background-color: ${({theme}) => theme.colors.shape};
+    border-radius: 10px;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 16px
+
+`
+
+
+
+

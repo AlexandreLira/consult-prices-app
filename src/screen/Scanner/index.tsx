@@ -4,6 +4,8 @@ import { RFPercentage } from "react-native-responsive-fontsize";
 
 import { Header } from "../../components/Header";
 import { BarCodeMask } from "../../components/BarCodeMask";
+import { NotFound } from "../../components/NotFound";
+import { LoadingCard } from "../../components/LoadingCard";
 
 import {
     Card,
@@ -21,13 +23,11 @@ import {
     SearchBarContent,
     Icon,
     SearchBarInput,
-    LoadingContent,
-    LoadingCard
+
 } from "./styles";
 
-import { useScannerViewModel } from "./view.model";
-import { ActivityIndicator } from "react-native";
-import { NotFound } from "../../components/NotFound";
+import { useScannerViewControlle } from "./view.controller";
+
 
 
 export function Scanner() {
@@ -45,7 +45,7 @@ export function Scanner() {
         isSearchLoading,
         error,
         isOnBarcodeSearch,
-    } = useScannerViewModel()
+    } = useScannerViewControlle()
 
 
     if (error) {
@@ -113,17 +113,8 @@ export function Scanner() {
                 </SwithBackground>
             </SwitchOptionContent>
             
+            {isSearchLoading && <LoadingCard/>}
 
-            {isSearchLoading && (
-                <LoadingContent>
-                    <LoadingCard>
-                        <ActivityIndicator size="large" color={colors.primary}/>
-                        <Text color={colors.title}>
-                            Estou fazendo sua busca...
-                        </Text>
-                    </LoadingCard>
-                </LoadingContent>
-            )}
         </Container>
     )
 }

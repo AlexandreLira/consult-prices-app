@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useTheme } from "styled-components";
 import { useSearch } from '../../viewModel/search';
 
-export function useScannerViewModel<FC>() {
+export function useScannerViewControlle<FC>() {
     const [scanned, setScanned] = useState(false);
     const [optionToSearch, setOptionToSearch] = useState<'byName' | 'byBarcode'>('byBarcode');
     const [isOnBarcodeSearch, setIsOnBarcodeSearch] = useState(true)
@@ -13,7 +13,7 @@ export function useScannerViewModel<FC>() {
     const [error, setError] = useState(false)
 
     const navigation = useNavigation()
-    const { googleShoppingSearchByName, googleSearchApi } = useSearch()
+    const { searchProductByName, searchProductByBarcode } = useSearch()
     const { colors } = useTheme()
 
     const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -22,7 +22,7 @@ export function useScannerViewModel<FC>() {
     async function onSearchByName() {
         setIsSearchLoading(true)
         try {
-            const products = await googleShoppingSearchByName(productName)
+            const products = await searchProductByName(productName)
             // @ts-ignore
             navigation.navigate('SearchResult', { products })
         } catch (error) {
@@ -37,10 +37,8 @@ export function useScannerViewModel<FC>() {
     const handleBarCodeScanned = async ({ type, data }: any) => {
         setScanned(true);
         setIsSearchLoading(true)
-        try {
-            // @ts-ignore
-            const productName = await googleSearchApi(data)
-            const products = await googleShoppingSearchByName(productName)
+        try {    
+            const products = await searchProductByBarcode(data)
             // @ts-ignore
             navigation.navigate('SearchResult', { products })
 

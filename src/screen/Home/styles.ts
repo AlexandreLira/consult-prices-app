@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
+import { FlatList, FlatListProps } from 'react-native';
+
 import { RFValue, RFPercentage } from 'react-native-responsive-fontsize';
-import { FlatList } from 'react-native';
 import { LinearGradient } from "expo-linear-gradient";
 
 
@@ -9,8 +10,21 @@ export const Container = styled.View`
     background-color: ${({theme}) => theme.colors.background};
 `;
 
+interface DataListProps {
+    title: string;
+    link: string;
+    product_link: string;
+    product_id: string;
+    serpapi_product_api: string;
+    source: string;
+    price: string;
+    extracted_price: number,
+    thumbnail: string;
+    delivery: string;
+}
+
 export const ProductList = styled(
-    FlatList 
+    FlatList as new (props: FlatListProps<DataListProps>) => FlatList<DataListProps> 
 ).attrs({
     showsVerticalScrollIndicator: false,
     contentContainerStyle: {

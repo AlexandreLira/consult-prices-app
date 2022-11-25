@@ -1,4 +1,7 @@
-const API_KEY = "9bff635b2826eb1df6f92f9d2e99676c85c8566023775aaeba9db7024671a32c";
+// development
+// const API_KEY = "9bff635b2826eb1df6f92f9d2e99676c85c8566023775aaeba9db7024671a32c";
+//Production 
+const API_KEY = "de79fb21feead5b8e7d3e80772c6fdadd06c4ea526ac9d70fbb6da6a23b0a0ed";
 
 
 interface googleSearchResultProps {

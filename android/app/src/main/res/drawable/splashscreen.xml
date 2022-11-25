@@ -3,9 +3,7 @@
   <item android:drawable="@color/splashscreen_background" />
 
   <item
-    android:width="300dp"
-    android:height="300dp"
-    android:drawable="@mipmap/splashscreen_image"
+    android:drawable="@mipmap/splashscreen_background"
     android:gravity="center"
   />
 </layer-list>

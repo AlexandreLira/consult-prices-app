@@ -1,8 +1,9 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTheme } from "styled-components";
 import { useSearch } from '../../viewModel/search';
+import { BarCodeScanner } from 'expo-barcode-scanner';
 
 export function useScannerViewControlle<FC>() {
     const [scanned, setScanned] = useState(false);
@@ -11,6 +12,7 @@ export function useScannerViewControlle<FC>() {
     const [productName, setProductName] = useState('')
     const [isSearchLoading, setIsSearchLoading] = useState(false)
     const [error, setError] = useState(false)
+    const [hasPermission, setHasPermission] = useState(null);
 
     const navigation = useNavigation()
     const { searchProductByName, searchProductByBarcode } = useSearch()
@@ -85,6 +87,16 @@ export function useScannerViewControlle<FC>() {
         };
     }
 
+    useEffect(() => {
+        async function getBarCodeScannerPermissions() {
+            const { status } = await BarCodeScanner.requestPermissionsAsync();
+            // @ts-ignore
+            setHasPermission(status === 'granted');
+          };
+      
+          getBarCodeScannerPermissions();
+    })
+
 
 
     return {
@@ -98,6 +110,7 @@ export function useScannerViewControlle<FC>() {
         optionToSearch,
         isSearchLoading,
         error,
+        hasPermission,
 
         onChangeText,
 

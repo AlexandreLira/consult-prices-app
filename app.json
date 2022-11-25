@@ -20,12 +20,17 @@
       ]
     },
     "web": {
-      "favicon": "./assets/icon.png"
+      "favicon": "./assets/favicon.png"
     },
     "splash": {
       "backgroundColor": "#0FB7FF",
-      "image": "./assets/splashscreen.png" ,
+      "image": "./assets/splashscreen.png",
       "resizeMode": "contain"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e084bf09-5a44-49e4-b464-f42d656578d5"
+      }
     }
   }
 }

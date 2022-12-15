@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Dimensions } from "react-native";
+import React from "react";
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { RFPercentage } from "react-native-responsive-fontsize";
-import { useNavigation } from "@react-navigation/native";
 
 import { Header } from "../../components/Header";
 import { BarCodeMask } from "../../components/BarCodeMask";
+import { NotFound } from "../../components/NotFound";
+import { LoadingCard } from "../../components/LoadingCard";
 
 import {
     Card,
@@ -13,59 +13,117 @@ import {
     Container,
     Content,
     ScanAnimation,
-    Text
-} from "./styles";
-import { products } from "../../utils/dumbData";
+    SwitchOptionContent,
+    SwithBackground,
+    SwithOption,
+    Text,
 
-const SCREEN_WIDTH = Dimensions.get("window").width;
+    SearchByNameContent,
+    Title,
+    SearchBarContent,
+    Icon,
+    SearchBarInput,
+
+} from "./styles";
+
+import { useScannerViewControlle } from "./view.controller";
+
+
 
 export function Scanner() {
-    const [scanned, setScanned] = useState(false);
-    const navigation = useNavigation()
 
-    
-    const handleBarCodeScanned = ({ type, data }: any) => {
-        setScanned(true);
-        // @ts-ignore
-        navigation.navigate('SearchResult', {products: products[0]})
-        // setScanned(false);
-    };
+    const {
+        onSearchByName,
+        onChangeSearchType,
+        makeSlideOutTranslation,
+        handleBarCodeScanned,
+        onChangeText,
+        handleTryAgain,
+        colors,
+        optionToSearch,
+        scanned,
+        isSearchLoading,
+        error,
+        isOnBarcodeSearch,
+        hasPermission
+    } = useScannerViewControlle()
 
 
-    function makeSlideOutTranslation(translationType: string, fromValue: number) {
-        return {
-            from: {
-                [translationType]: SCREEN_WIDTH * -0.18
-            },
-            to: {
-                [translationType]: fromValue
-            }
-        };
+    if (error) {
+        return (
+            <NotFound onPress={handleTryAgain} />
+        )
     }
+
+    if (hasPermission === null) {
+        return <Text>Requesting for camera permission</Text>;
+      }
+    
+      if (hasPermission === false) {
+        return <Text>No access to camera</Text>;
+      }
+
 
     return (
         <Container>
             <Header title="Pesquisar produto" back />
-            <Content>
-                <BarCodeMask />
-                <CardContainer>
-                    <Card>
-                        <Text>Escaneie o código de barras do produto</Text>
-                    </Card>
-                </CardContainer>
+            {optionToSearch === 'byBarcode' ? (
+                <Content>
+                    <CardContainer>
+                        <Card>
+                            <Text>Escaneie o código de barras do produto</Text>
+                        </Card>
+                    </CardContainer>
+                    <BarCodeMask />
 
-                <ScanAnimation
-                    animation={makeSlideOutTranslation(
-                        "translateY",
-                        RFPercentage(10)
-                    )}
-                />
+                    <ScanAnimation
+                        animation={makeSlideOutTranslation(
+                            "translateY",
+                            RFPercentage(10)
+                        )}
+                    />
 
-                <BarCodeScanner
-                    onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-                    style={{ flex: 1 }}
-                />
-            </Content>
+                    <BarCodeScanner
+                        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+                        style={{ flex: 1 }}
+                    />
+                </Content>
+            ) : (
+                <SearchByNameContent>
+                    <Title>Pesquise pelo nome do produto</Title>
+
+                    <SearchBarContent>
+                        <Icon name="search" />
+                        <SearchBarInput
+                            placeholder="Exemplo: Iphone 8 plus"
+                            onChangeText={onChangeText}
+                            onSubmitEditing={onSearchByName}
+                        />
+                    </SearchBarContent>
+
+                </SearchByNameContent>
+            )}
+
+            <SwitchOptionContent>
+                <Text color={isOnBarcodeSearch ? colors.shape : colors.title}>
+                    Pesquisar produto por:
+                </Text>
+                <SwithBackground onPress={onChangeSearchType}>
+                    <SwithOption disabled={!isOnBarcodeSearch}>
+                        <Text color={isOnBarcodeSearch ? colors.shape : colors.title}>
+                            Código de barras
+                        </Text>
+                    </SwithOption>
+                    <SwithOption disabled={isOnBarcodeSearch}>
+                        <Text color={!isOnBarcodeSearch ? colors.shape : colors.title}>
+                            Nome
+                        </Text>
+                    </SwithOption>
+                </SwithBackground>
+            </SwitchOptionContent>
+            
+            {isSearchLoading && <LoadingCard/>}
+
         </Container>
     )
 }

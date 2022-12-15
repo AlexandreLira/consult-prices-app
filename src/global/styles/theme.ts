@@ -1,9 +1,7 @@
 export default {
     colors: {
-        primary: '#1DC5EA',
+        primary: '#0FB7FF',
 
-        secondary: '#FF872C',
-        secondary_light: 'rgba(255, 135, 44, 0.3)',
 
         success: '#12A454',
         success_light: 'rgba(18, 164, 84, 0.1)',
@@ -12,10 +10,12 @@ export default {
         attention_light: 'rgba(232, 63, 91, 0.1)',
 
 
-        shape: '#FFFFFF',
         title: '#363F5F',
-        text: '#969CB2',
+
+        text: '#969CB3',
         text_light: 'rgba(150, 156, 178, 0.2)',
+
+        shape: '#FFFFFF',
         background: '#F0F2F5'
     },
     fonts: {

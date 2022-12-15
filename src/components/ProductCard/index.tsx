@@ -1,6 +1,5 @@
-import { Link } from '@react-navigation/native';
 import React from 'react';
-import { TouchableOpacityProps, Linking } from 'react-native';
+import { TouchableOpacityProps } from 'react-native';
 
 import {
     Container,
@@ -22,9 +21,10 @@ interface ProductProps {
 
 interface ProductCardProps extends TouchableOpacityProps {
     data: ProductProps
+    onPress?: () => void;
 }
 
-export function ProductCard({ data }: ProductCardProps) {
+export function ProductCard({ data, onPress }: ProductCardProps) {
     const {
         price,
         title,
@@ -34,7 +34,7 @@ export function ProductCard({ data }: ProductCardProps) {
     } = data
 
     return (
-        <Container onPress={() => Linking.openURL(link)}>
+        <Container onPress={onPress}>
                 <ProductImage source={{ uri: thumbnail }} />
 
                 <Content>

@@ -1,10 +1,36 @@
 {
   "expo": {
-    "name": "compare-prices",
-    "slug": "compare-prices",
+    "name": "Consultar Preços",
+    "slug": "consult-prices",
     "version": "1.0.0",
+    "primaryColor": "#0FB7FF",
+    "icon": "./assets/icon.png",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "android": {
+      "package": "com.liradev.consultPrices",
+      "versionCode": 1,
+      "permissions": [
+        "CAMERA"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "splash": {
+      "backgroundColor": "#0FB7FF",
+      "image": "./assets/splashscreen.png",
+      "resizeMode": "contain"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e084bf09-5a44-49e4-b464-f42d656578d5"
+      }
+    }
   }
 }

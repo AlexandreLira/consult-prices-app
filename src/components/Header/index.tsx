@@ -15,7 +15,7 @@ export function Header({title, back} : HeaderProps){
             <Title>{title}</Title>
             {back && (
                 <BackButton onPress={() => navigation.goBack()}>
-                    <Icon name="chevron-left"/> 
+                    <Icon name="arrow-left"/> 
                 </BackButton>
 
             )}

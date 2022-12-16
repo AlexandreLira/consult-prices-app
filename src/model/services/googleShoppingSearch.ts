@@ -1,8 +1,3 @@
-// development
-// const API_KEY = "9bff635b2826eb1df6f92f9d2e99676c85c8566023775aaeba9db7024671a32c";
-//Production 
-const API_KEY = "de79fb21feead5b8e7d3e80772c6fdadd06c4ea526ac9d70fbb6da6a23b0a0ed";
-
 
 interface googleSearchResultProps {
     shopping_results: {
@@ -28,7 +23,7 @@ export async function fetchAPI(url: string) {
 
 export async function googleShoppingSearchByName(productName: string) {
     const searchOptions = {
-        api_key: API_KEY,
+        api_key: process.env.SERPAPI_KEY,
         device: "desktop",
         engine: "google",
         q: productName,
@@ -51,7 +46,7 @@ export async function googleShoppingSearchByName(productName: string) {
         `tbm=${searchOptions.tbm}&`,
         `device=${searchOptions.device}&`,
         `nfpr=${searchOptions.nfpr}&`,
-        `api_key=${API_KEY}`].join('')
+        `api_key=${searchOptions.api_key}`].join('')
 
 
     const response = await fetchAPI(encodeURI(url))

@@ -1,7 +1,6 @@
-const API_KEY = 'AIzaSyA3lgN1JFkx8WCxddXGQ-QBhr0aNX2lfeI'
 export async function googleSearchApi(name: string){
     const searchOptions = {
-        key: API_KEY,
+        key: process.env.CUSTOM_SEARCH_KEY_API,
         searchType: 'image',
         q: name,
         num: 1,

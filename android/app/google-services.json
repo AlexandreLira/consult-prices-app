@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "759712615976",
+    "project_id": "consult-prices",
+    "storage_bucket": "consult-prices.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:759712615976:android:e8612dcbc5404f4b906f1d",
+        "android_client_info": {
+          "package_name": "com.compareprices"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "759712615976-2hptsoeqagsr0t4k381ei15vroi20kah.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMnd3mic3BLK7Yr6pDg8FktoiIRCnPKyQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "759712615976-2hptsoeqagsr0t4k381ei15vroi20kah.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

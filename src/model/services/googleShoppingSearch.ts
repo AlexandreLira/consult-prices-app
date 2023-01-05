@@ -1,3 +1,6 @@
+import firestore from '@react-native-firebase/firestore';
+import { getCurrentSerpApiKey, setSerpApiError } from './firebase';
+import { getSerpApiKeyFromStorage } from './storage';
 
 interface googleSearchResultProps {
     shopping_results: {
@@ -22,8 +25,10 @@ export async function fetchAPI(url: string) {
 }
 
 export async function googleShoppingSearchByName(productName: string) {
+    const serpApiKey = await getSerpApiKeyFromStorage()
+    
     const searchOptions = {
-        api_key: process.env.SERPAPI_KEY,
+        api_key: serpApiKey,
         device: "desktop",
         engine: "google",
         q: productName,
@@ -51,14 +56,23 @@ export async function googleShoppingSearchByName(productName: string) {
 
     const response = await fetchAPI(encodeURI(url))
     const data: googleSearchResultProps = await response.json()
+    
     if(data.error){
+        await getCurrentSerpApiKey()
+        await setSerpApiError()
         throw new Error(data.error)
     }
     
     return data.shopping_results.filter(item => !item.price.includes('mês'))
 
 
+}
 
+async function getApiKey(){
 
+    const userDocument = await firestore().collection('config').doc('serpapi').get();
+    const data = userDocument.data()!
+
+    return data.currentKey
 }
 

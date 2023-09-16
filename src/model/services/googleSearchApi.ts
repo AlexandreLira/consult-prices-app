@@ -1,6 +1,9 @@
+import { CUSTOM_SEARCH_KEY_API } from '@env';
+
+
 export async function googleSearchApi(name: string){
     const searchOptions = {
-        key: process.env.CUSTOM_SEARCH_KEY_API,
+        key: CUSTOM_SEARCH_KEY_API,
         searchType: 'image',
         q: name,
         num: 1,
@@ -25,7 +28,6 @@ export async function googleSearchApi(name: string){
         throw new Error(data.error)
     }
     const title = formattedTitle(data.items[0].title, name)
-    console.log(title)
     return title
 }
 
